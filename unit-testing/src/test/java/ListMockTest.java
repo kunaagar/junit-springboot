@@ -1,5 +1,7 @@
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -81,5 +83,37 @@ public class ListMockTest {
 		
 		assertEquals("SomeString1",captor.getAllValues().get(0));
 		assertEquals("SomeString2",captor.getAllValues().get(1));
+	}
+	
+	@Test
+	public void mocking() {
+		ArrayList list = mock(ArrayList.class);
+		
+		list.get(0);//null
+		list.size();//0
+		list.add("A");
+		list.add("B");
+		list.size();//0
+		
+		when(list.size()).thenReturn(5);
+		list.size();//5
+	}
+	
+	@Test
+	public void spying() {
+		ArrayList list = spy(ArrayList.class);
+		
+		//list.get(0);//Exception 
+		list.size();//0
+		list.add("A");
+		list.add("B");
+		list.size();//2
+
+		System.out.println(list.size());
+		when(list.size()).thenReturn(5);
+		System.out.println(list.size());//5
+		
+		list.add("C");
+		System.out.println(list.size());//5 Reason it will be overridden
 	}
 }
